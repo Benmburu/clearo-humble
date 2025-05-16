@@ -23,6 +23,13 @@ diff_cont:
 
     use_stamped_vel: false
 
+    linear.x.has_velocity_limits: true
+    linear.x.max_velocity: 0.2  # Cap at 0.2 m/s
+    linear.x.min_velocity: -0.2
+    angular.z.has_velocity_limits: true
+    angular.z.max_velocity: 0.7  # Match velocity_smoother
+    angular.z.min_velocity: -0.7
+
     # open_loop: false    
 
     # wheels_per_side: x
