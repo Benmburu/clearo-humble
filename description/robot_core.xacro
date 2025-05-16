@@ -3,17 +3,31 @@
 
     <xacro:include filename="inertial_macros.xacro" />
 
-    <xacro:property name="mass_scale" value="0.01" />
-    <xacro:property name="chassis_height" value="0.12" />
-    <xacro:property name="chassis_radius" value="0.12" />
-    <xacro:property name="chassis_mass" value="${0.02 * mass_scale}" />
-    <xacro:property name="wheel_radius" value="0.0425" />
-    <xacro:property name="wheel_thickness" value="0.036" />
-    <xacro:property name="wheel_mass" value="${0.1 * mass_scale}" />
-    <xacro:property name="wheel_offset_x" value="0" />
+    <xacro:property name="mass_scale" value="1" />
+    <!-- <xacro:property name="chassis_height" value="0.12" />
+    <xacro:property name="chassis_radius" value="0.12" /> -->
+
+    <xacro:property name="chassis_length" value="0.304"/>
+    <xacro:property name="chassis_width" value="0.304"/>
+    <xacro:property name="chassis_height" value="0.076"/>
+    <xacro:property name="chassis_mass" value="4.0"/>
+
+    <xacro:property name="wheel_radius" value="0.033"/>
+    <xacro:property name="wheel_thickness" value="0.026"/>
+    <xacro:property name="wheel_mass" value="0.05"/>
+    <xacro:property name="wheel_offset_x" value="0.226"/>
+    <xacro:property name="wheel_offset_y" value="0.152"/>
+    <xacro:property name="wheel_offset_z" value="0.01"/>
+
+
+    <!-- <xacro:property name="chassis_mass" value="${0.02 * mass_scale}" /> -->
+    <!-- <xacro:property name="wheel_radius" value="0.0425" /> -->
+    <!-- <xacro:property name="wheel_thickness" value="0.036" /> -->
+    <!-- <xacro:property name="wheel_mass" value="${0.1 * mass_scale}" /> -->
+    <!-- <xacro:property name="wheel_offset_x" value="0" /> -->
     <!-- <xacro:property name="wheel_offset_y" value="${chassis_radius + (wheel_thickness / 2.0)}" /> -->
-    <xacro:property name="wheel_offset_y" value="${0.275/2}" />
-    <xacro:property name="wheel_offset_z" value="0" />
+    <!-- <xacro:property name="wheel_offset_y" value="${0.275/2}" /> -->
+    <!-- <xacro:property name="wheel_offset_z" value="0" /> -->
     <xacro:property name="caster_wheel_radius" value="0.02" />
     <xacro:property name="caster_wheel_mass" value="${0.02 * mass_scale}" />
     <xacro:property name="caster_wheel_offset_x" value="0.075" />
@@ -74,21 +88,26 @@
         <visual>
             <origin xyz="0 0 ${chassis_height/2}" />
             <geometry>
-                <cylinder radius="${chassis_radius}" length="${chassis_height}" />
+                <box size="${chassis_length} ${chassis_width} ${chassis_height}" />
             </geometry>
-            <material name="white" />
+            <material name="orange" />
         </visual>
 
         <collision>
             <origin xyz="0 0 ${chassis_height/2}" />
             <geometry>
-                <cylinder radius="${chassis_radius}" length="${chassis_height}" />
+                <box size="${chassis_length} ${chassis_width} ${chassis_height}" />
+                <!-- <cylinder radius="${chassis_radius}" length="${chassis_height}" /> -->
             </geometry>
         </collision>
 
-        <xacro:inertial_cylinder mass="${chassis_mass}" radius="${chassis_radius}" length="${chassis_height}">
+        <!-- <xacro:inertial_cylinder mass="${chassis_mass}" radius="${chassis_radius}" length="${chassis_height}">
             <origin xyz="0 0 ${chassis_height/2}" rpy="0 0 0" />
-        </xacro:inertial_cylinder>
+        </xacro:inertial_cylinder> -->
+
+        <xacro:inertial_box mass="${chassis_mass}" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}">
+            <origin xyz="0 0 ${chassis_height/2}" rpy="0 0 0" />
+        </xacro:inertial_box>
     </link>
 
     <gazebo reference="chassis">
@@ -181,7 +200,8 @@
             </geometry>
         </collision>
         <xacro:inertial_sphere mass="${caster_wheel_mass}" radius="${caster_wheel_radius}">
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="0.075 0.132 ${caster_wheel_offset_z}" rpy="0 0 0" />
+            <!-- <origin xyz="0 0 0" rpy="0 0 0" /> -->
         </xacro:inertial_sphere>
     </link>
 
@@ -213,7 +233,8 @@
             </geometry>
         </collision>
         <xacro:inertial_sphere mass="${caster_wheel_mass}" radius="${caster_wheel_radius}">
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <!-- <origin xyz="0 0 0" rpy="0 0 0" /> -->
+            <origin xyz="0.075 -0.132 ${caster_wheel_offset_z}" rpy="0 0 0" />
         </xacro:inertial_sphere>
     </link>
 
@@ -234,6 +255,7 @@
     <link name="laser_frame">
         <visual>
             <origin xyz="0 0 0" />
+            <!-- <origin xyz="0 0 0.058" rpy="0 0 0"/> -->
             <geometry>
                 <cylinder radius="${lidar_radius}" length="${lidar_height}" />
             </geometry>
@@ -242,6 +264,7 @@
 
         <collision>
             <origin xyz="0 0 0" />
+            <!-- <origin xyz="0 0 0.058" rpy="0 0 0"/> -->
             <geometry>
                 <cylinder radius="${lidar_radius}" length="${lidar_height}" />
             </geometry>
