@@ -274,8 +274,12 @@ controller_server:
       wz_std: 0.4
       vx_max: 0.2
       vx_min: -0.2
-      vy_max: 0.5
-      wz_max: 1.9
+      vy_max: 0.0
+      wz_max: 0.7
+      acc_lim_x: 1.0     # Smooth acceleration
+      decel_lim_x: -1.0  # Smooth deceleration
+      acc_lim_theta: 3.2
+      decel_lim_theta: -3.2
       iteration_count: 1
       prune_distance: 1.7
       transform_tolerance: 0.1
@@ -476,7 +480,8 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.025
-      robot_radius: 0.155
+      # robot_radius: 0.155
+      footprint: '[[-0.152, -0.152], [-0.152, 0.152], [0.152, 0.152], [0.152, -0.152]]'
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
@@ -515,7 +520,8 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: True
-      robot_radius: 0.155
+      # robot_radius: 0.155
+      footprint: '[[-0.152, -0.152], [-0.152, 0.152], [0.152, 0.152], [0.152, -0.152]]'
       resolution: 0.025
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
