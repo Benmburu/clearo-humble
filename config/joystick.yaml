@@ -34,7 +34,7 @@ teleop_node:
       yaw: 1.0
 
 
-    enable_button: 4
-    enable_turbo_button: 5 #6
+    enable_button: 4 #L1
+    enable_turbo_button: 5 #R1
 
     require_enable_button: true # if true, you will need to press 4 for bot to move
